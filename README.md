@@ -1,86 +1,93 @@
-# Kawaii-gcc かわいいGCC
-Make your GCC compiler kawaii~!
+# Kawaii-gcc 让GCC变得可爱
+让你的GCC编译器变得可爱！
 
-This project makes the output messages from GCC compiler looks kawaii by editing the localization file of GCC.
+本项目通过修改GCC的输出信息的本地化文件的方式让GCC变得可爱。
 
-Everyone is welcomed to contribute and add more kawaii messages!
+欢迎贡献更多有趣的内容。
 
-[中文版](./README-zh.md)
+## 依赖
+- GNU GCC
+- GNU Gettext
 
-## How to use it?
-### Linux (in an Ubuntu example)
+## 如何使用？
+### ArchLinux
 
-> [Demo Video on YouTube(Japanese)](https://youtu.be/ASWBU8HhvY0)
+- 编辑`/etc/locale.gen`, 将`zh_CN.UTF-8 UTF-8`取消注释
+    ```bash
+    sudo nano /etc/locale.gen
 
-- Install Japanese for your terminal (if not installed)
+    # 取消zh_CN.UTF-8 UTF-8的注释
+
+    #zh_CN.GB18030 GB18030
+    #zh_CN.GBK GBK
+    zh_CN.UTF-8 UTF-8
+    #zh_CN GB2312
+    #zh_HK.UTF-8 UTF-8
+    #zh_HK BIG5-HKSCS
+    #zh_SG.UTF-8 UTF-8
+    #zh_SG.GBK GBK
+    ```
+- 执行`locale-gen`
 
     ```bash
-    sudo apt-get install language-pack-ja language-pack-gnome-ja language-pack-ja-base language-pack-gnome-ja-base
+    sudo locale-gen
     ```
 
-- Install `gcc` ,  `gettext` and `g++`.
+- 编辑`/etc/locale.conf`, 设定 LANG 变量`LANG=zh_CN.UTF-8`
 
     ```bash
-    sudo apt-get install gcc gettext g++
+    sudo nano /etc/locale.conf
+    LANG=zh_CN.UTF-8
     ```
 
-- Install `gcc locales`
-
-    Check your gcc main version number by:
+- 安装任意中文字体包 (如果没有安装)
 
     ```bash
-    gcc -v
+    sudo pacman -S wqy-zenhei
     ```
 
-    It is 12.3.0 on my end. So the main version number is 12.
+- 安装 `gcc`.
 
     ```bash
-    sudo apt-get install gcc-12-locales
+    sudo pacman -S gcc
     ```
 
-- Find your gcc language file. Defaultly, it should be found in `/usr/share/locale/ja/LC_MESSAGES/gcc.mo`. However, it is also possible that you cannot find the file or the file is named as `gcc-12.mo`. If there's a related file, back up it. (eg. `sudo mv gcc-12.mo gcc-12.mo.bak`) Don't worry if there's no such file, you need to do nothing.
+- 找到你的语言文件的路径。默认会在 `/usr/share/locale/zh_CN/LC_MESSAGES/gcc.mo`. 如果已有相关文件，备份之。 (eg. `sudo mv gcc.mo gcc.mo.bak`) 如果没有相关文件，无需担心，什么都不需要做。
 
-- Use the following command to clone the project from GitHub and compile the `po` file in the project and copy it to the path.
+- 通过以下命令克隆该仓库并编译仓库中的`po` 文件然后将其复制到刚才的路径去。
 
     ```bash
     git clone https://github.com/Bill-Haku/kawaii-gcc
     cd kawaii-gcc
-    msgfmt gcc.po -o gcc.mo && sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-12.mo
+    msgfmt gcc-zh.po -o gcc.mo && sudo cp gcc.mo /usr/share/locale/zh_CN/LC_MESSAGES/gcc.mo
     ```
 
-    > The `gcc.po` is the localization file for ja_JP, and the `gcc-zh.po` is the localization file for zh_CN. See the [Chinese version README](./README-zh.md) document for more details.
-
-    Regarding to the file name:
-
-    - If you found an existed file in the last step, use the existed file name.
-    - if not, try `gcc-<MAIN VERSION NUMBER>.mo` first, and if it doesn't work, rename it to `gcc.mo`.
-
-- Change terminal environmental variables into Japanese:
+- 修改环境变量以将终端语言改为中文：
 
     ```bash
     vim ~/.bashrc
     
     # Add the following lines
-    export LANG="ja_JP.UTF-8"
-    export LANGUAGE="ja_JP.UTF-8"
+    export LANG="zh_CN.UTF-8"
+    export LANGUAGE="zh_CN.UTF-8"
     # Save it in Vim
 
     source ~/.bashrc
     ```
 
-- Now your GCC has become kawaii~!
+- 现在你的GCC已经变得可爱了。
 
-    You can have a try with the `test.cc` provided in the project.
+    你可以使用附带的 `test.cc` 来试试效果。
 
     ```bash
     gcc test.cc -Wall
-    # -Wall makes GCC output all the warning messages.
+    # -Wall 表示让GCC输出所有警告信息
     ```
 
 ### macOS & Windows
 
-Not implemented yet. Contribution welcomed!
+暂未实现。欢迎贡献。
 
-## Special Thanks
+## 特别鸣谢
 
-This project is inspired by [`gcc-hentai`](https://github.com/Mosklia/gcc-hentai). It was a Chinese project, and I created this repo to make a Japanese version and share it to Japanese users. I added the new text, edited and completed some details in the use instructions, and made a video in Japanese to share it. The video got unexpected attention in Chinese users on Bilibili, so I added contents of Chinese in it. Thanks for the sharing and the open-source spirit of the original authors.
+本项目的灵感来自[`gcc-hentai`](https://github.com/Mosklia/gcc-hentai)项目。为了将其推广到日语区，我创建了本仓库、制作了日语版并修改完善了使用说明的诸多细节，最后制作了完全日语的宣传视频发布在YouTube，不料却在Bilibili获得了关注。十分感谢原作者的分享和开源精神。
