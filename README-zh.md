@@ -10,54 +10,29 @@
 - GNU Gettext
 
 ## 如何使用？
-### Linux (以Ubuntu为例)
+### ArchLinux
 
-> [中文版使用教程视频-Bilibili](https://www.bilibili.com/video/BV1gC4y1P7t3/)
->
-> [日语版使用教程视频-Bilibili](https://www.bilibili.com/video/BV1Wg4y1X74a/)
->
-> [日语版使用教程视频-YouTube](https://youtu.be/ASWBU8HhvY0)
-
-- 安装中文 (如果没有安装)
+- 安装任意中文字体包 (如果没有安装)
 
     ```bash
-    sudo apt-get install language-pack-zh-hans language-pack-zh-hans-base
+    sudo pacman -S wqy-zenhei
     ```
 
-- 安装 `gcc` ,  `gettext` 和 `g++`.
+- 安装 `gcc`.
 
     ```bash
-    sudo apt-get install gcc gettext g++
+    sudo pacman -S gcc
     ```
 
-- 安装 `gcc locales`
-
-    通过以下命令检查你的`gcc`版本号
-
-    ```bash
-    gcc -v
-    ```
-
-    我这里是12.3.0.所以我的主版本号是12，安装`gcc-12-locales`
-
-    ```bash
-    sudo apt-get install gcc-12-locales
-    ```
-
-- 找到你的语言文件的路径。默认会在 `/usr/share/locale/zh_CN/LC_MESSAGES/gcc.mo`. 不过你也有可能找不到该文件或者找到名为`gcc-12.mo`的文件。如果已有相关文件，备份之。 (eg. `sudo mv gcc-12.mo gcc-12.mo.bak`) 如果没有相关文件，无需担心，什么都不需要做。
+- 找到你的语言文件的路径。默认会在 `/usr/share/locale/zh_CN/LC_MESSAGES/gcc.mo`. 如果已有相关文件，备份之。 (eg. `sudo mv gcc.mo gcc.mo.bak`) 如果没有相关文件，无需担心，什么都不需要做。
 
 - 通过以下命令克隆该仓库并编译仓库中的`po` 文件然后将其复制到刚才的路径去。
 
     ```bash
     git clone https://github.com/Bill-Haku/kawaii-gcc
     cd kawaii-gcc
-    msgfmt gcc-zh.po -o gcc.mo && sudo cp gcc.mo /usr/share/locale/zh_CN/LC_MESSAGES/gcc-12.mo
+    msgfmt gcc-zh.po -o gcc.mo && sudo cp gcc.mo /usr/share/locale/zh_CN/LC_MESSAGES/gcc.mo
     ```
-
-    关于文件名：
-
-    - 如果你在上个步骤找到了相关文件，请直接使用原本的名字。
-    - 如果没有，首先使用 `gcc-<主版本号>.mo` 。如果发现不起作用，将其重命名为 `gcc.mo`.
 
 - 修改环境变量以将终端语言改为中文：
 
